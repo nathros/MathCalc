@@ -1,0 +1,257 @@
+object CalcFrame: TCalcFrame
+  Left = 0
+  Height = 353
+  Top = 0
+  Width = 402
+  ClientHeight = 353
+  ClientWidth = 402
+  TabOrder = 0
+  DesignLeft = 747
+  DesignTop = 220
+  object ExpressionInput: TEdit
+    Left = 168
+    Height = 21
+    Top = 216
+    Width = 224
+    Alignment = taRightJustify
+    OnKeyPress = ExpressionInputKeyPress
+    TabOrder = 0
+  end
+  object InputButton1: TButton
+    Left = 168
+    Height = 32
+    Top = 312
+    Width = 32
+    Caption = '1'
+    OnClick = InputButtonClick
+    TabOrder = 1
+  end
+  object InputButton2: TButton
+    Left = 200
+    Height = 32
+    Top = 312
+    Width = 32
+    Caption = '2'
+    OnClick = InputButtonClick
+    TabOrder = 2
+  end
+  object InputButton3: TButton
+    Left = 232
+    Height = 32
+    Top = 312
+    Width = 32
+    Caption = '3'
+    OnClick = InputButtonClick
+    TabOrder = 3
+  end
+  object InputButton4: TButton
+    Left = 168
+    Height = 32
+    Top = 280
+    Width = 32
+    Caption = '4'
+    OnClick = InputButtonClick
+    TabOrder = 4
+  end
+  object InputButton5: TButton
+    Left = 200
+    Height = 32
+    Top = 280
+    Width = 32
+    Caption = '5'
+    OnClick = InputButtonClick
+    TabOrder = 5
+  end
+  object InputButton6: TButton
+    Left = 232
+    Height = 32
+    Top = 280
+    Width = 32
+    Caption = '6'
+    OnClick = InputButtonClick
+    TabOrder = 6
+  end
+  object InputButton7: TButton
+    Left = 168
+    Height = 32
+    Top = 248
+    Width = 32
+    Caption = '7'
+    OnClick = InputButtonClick
+    TabOrder = 7
+  end
+  object InputButton8: TButton
+    Left = 200
+    Height = 32
+    Top = 248
+    Width = 32
+    Caption = '8'
+    OnClick = InputButtonClick
+    TabOrder = 8
+  end
+  object InputButton9: TButton
+    Left = 232
+    Height = 32
+    Top = 248
+    Width = 32
+    Caption = '9'
+    OnClick = InputButtonClick
+    TabOrder = 9
+  end
+  object InputButton0: TButton
+    Left = 264
+    Height = 32
+    Top = 312
+    Width = 32
+    Caption = '0'
+    OnClick = InputButtonClick
+    TabOrder = 10
+  end
+  object InputButtonDivide: TButton
+    Left = 296
+    Height = 32
+    Top = 280
+    Width = 32
+    Caption = '/'
+    OnClick = InputButtonClick
+    TabOrder = 11
+  end
+  object InputButtonTimes: TButton
+    Left = 328
+    Height = 32
+    Top = 280
+    Width = 32
+    Caption = '*'
+    OnClick = InputButtonClick
+    TabOrder = 12
+  end
+  object InputButtonMinus: TButton
+    Left = 328
+    Height = 32
+    Top = 312
+    Width = 32
+    Caption = '-'
+    OnClick = InputButtonClick
+    TabOrder = 13
+  end
+  object InputButtonAdd: TButton
+    Left = 296
+    Height = 32
+    Top = 312
+    Width = 32
+    Caption = '+'
+    OnClick = InputButtonClick
+    TabOrder = 14
+  end
+  object InputButtonPlusMinus: TButton
+    Left = 264
+    Height = 32
+    Top = 248
+    Width = 32
+    Caption = '+/-'
+    OnClick = PlusMinusClick
+    TabOrder = 15
+  end
+  object InputButtonDecimal: TButton
+    Left = 264
+    Height = 32
+    Top = 280
+    Width = 32
+    Caption = '.'
+    OnClick = InputButtonClick
+    TabOrder = 16
+  end
+  object InputButtonOpenBracket: TButton
+    Left = 296
+    Height = 32
+    Top = 248
+    Width = 32
+    Caption = '('
+    OnClick = InputButtonClick
+    TabOrder = 17
+  end
+  object InputButtonCloseBracket: TButton
+    Left = 328
+    Height = 32
+    Top = 248
+    Width = 32
+    Caption = ')'
+    OnClick = InputButtonClick
+    TabOrder = 18
+  end
+  object InputButtonPower: TButton
+    Left = 360
+    Height = 32
+    Top = 280
+    Width = 32
+    Caption = '^'
+    OnClick = InputButtonClick
+    TabOrder = 19
+  end
+  object HistoryMemo: TMemo
+    Left = 168
+    Height = 200
+    Top = 8
+    Width = 224
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 20
+  end
+  object InputButtonEquals: TButton
+    Left = 360
+    Height = 32
+    Top = 312
+    Width = 32
+    Caption = '='
+    OnClick = InputButtonEqualsClick
+    TabOrder = 21
+  end
+  object InputButtonClear: TButton
+    Left = 360
+    Height = 32
+    Top = 248
+    Width = 32
+    Caption = 'C'
+    OnClick = InputButtonClearClick
+    TabOrder = 22
+  end
+  object StoredVariables: TStringGrid
+    Left = 8
+    Height = 336
+    Top = 8
+    Width = 136
+    ColCount = 2
+    FixedCols = 0
+    GridLineWidth = 0
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goDrawFocusSelected, goRowSelect, goSmoothScroll, goHeaderHotTracking, goHeaderPushedLook]
+    RowCount = 1
+    TabOrder = 23
+    TitleStyle = tsNative
+    OnContextPopup = StoredVariablesContextPopup
+    Cells = (
+      2
+      0
+      0
+      'Name'
+      1
+      0
+      'Value'
+    )
+  end
+  object StoredVariablesPopupMenu: TPopupMenu
+    left = 64
+    top = 200
+    object MenuAddVar: TMenuItem
+      Caption = 'New Variable'
+      OnClick = MenuAddVarClick
+    end
+    object MenuChangeVariable: TMenuItem
+      Caption = 'Change Variable'
+      OnClick = MenuChangeVariableClick
+    end
+    object MenuDelVar: TMenuItem
+      Caption = 'Delete Variable'
+      OnClick = MenuDelVarClick
+    end
+  end
+end

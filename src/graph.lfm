@@ -1,0 +1,27 @@
+object GraphForm: TGraphForm
+  Left = 47
+  Height = 395
+  Top = 295
+  Width = 391
+  Caption = 'Graph'
+  ClientHeight = 395
+  ClientWidth = 391
+  OnCreate = FormCreate
+  Position = poMainFormCenter
+  LCLVersion = '1.6.0.4'
+  object PaintArea: TPaintBox
+    Left = 16
+    Height = 335
+    Top = 16
+    Width = 361
+    OnPaint = PaintAreaPaint
+  end
+  object FunctionInput: TEdit
+    Left = 16
+    Height = 23
+    Top = 360
+    Width = 361
+    OnKeyPress = FunctionInputKeyPress
+    TabOrder = 0
+  end
+end

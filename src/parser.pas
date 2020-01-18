@@ -1,0 +1,617 @@
+unit Parser;
+
+{$mode objfpc}{$H+}
+
+interface
+
+uses
+  Classes, SysUtils, Math;
+
+type
+  TStringListPointer = ^TStringList;
+
+type
+  ErrorMsg = class(Exception);
+
+  TVariableItem = ^Item;
+  Item = record
+    VarName: string;
+    VarResult: extended;
+    Next: TVariableItem;
+  end;
+
+  TStackItem = ^Node;
+  Node = record
+    //Value: variant;  // variant causes rounding errors when used as extended.
+    AOperator: char;
+    AOperand: extended;
+    Next: TStackItem;
+  end;
+
+  TVariable = class
+    private
+      FirstVariable: TVariableItem;
+      LastVariable: TVariableItem;
+      function IsDuplicateVariable(const VarName: string): boolean;
+    public
+      constructor Create;
+      destructor Free;
+      procedure ChangeVariable(VarName: string; VarResult: extended);
+      function GetVariable(VarName: string): extended;
+      procedure AddVariable(VarName: string; VarResult: extended);
+      procedure DelVariable(VarName: string);
+      function GetAllVariables: TStringListPointer;
+    end;
+
+  TStack = class
+    private
+      TopOfStack: TStackItem;
+    public
+      constructor Create;
+      destructor Free;
+      function IsEmpty: boolean;
+      procedure Push(NewItem: char); overload;
+      procedure Push(NewItem: extended); overload;
+      procedure Pop;
+      function GetOperand: extended;
+      function GetOperator: char;
+      function Count: integer;
+    end;
+
+  TParser = class
+    private
+      Stack: TStack;
+      function Tokenise(Expression: string): string;
+      //StartList: TStringList;
+      //EndList: TStringList;
+    public
+      Variable: TVariable;
+      constructor Create;
+      destructor Free;
+      function InfixToPostfix(Expression: string): string;
+      function EvalPostfix(Postfix: string): extended;
+      function EvalInfix(Postfix: string): extended;
+      //procedure SortBracketOrder;
+      //procedure FindBrackets(const Expression: string);
+    end;
+
+implementation
+
+{ TStack }
+{------------------------------------------------------------------------------}
+constructor TStack.Create;
+begin
+  TopOfStack:=nil;
+end;
+{------------------------------------------------------------------------------}
+destructor TStack.Free;
+begin
+  while not(IsEmpty) do Pop;
+end;
+{------------------------------------------------------------------------------}
+function TStack.IsEmpty: boolean;
+begin
+  Result:=TopOfStack=nil;
+end;
+{------------------------------------------------------------------------------}
+procedure TStack.Push(NewItem: char); overload;
+var NewNode: TStackItem;
+begin
+  New(NewNode);
+  NewNode^.AOperator:=NewItem;
+  NewNode^.Next:=TopOfStack;
+  TopOfStack:=NewNode;
+end;
+{------------------------------------------------------------------------------}
+procedure TStack.Push(NewItem: extended); overload;
+var NewNode: TStackItem;
+begin
+  New(NewNode);
+  NewNode^.AOperand:=NewItem;
+  NewNode^.Next:=TopOfStack;
+  TopOfStack:=NewNode;
+end;
+{------------------------------------------------------------------------------}
+procedure TStack.Pop;
+var temp: TStackItem;
+begin
+  temp:=TopOfStack;
+  TopOfStack:=TopOfStack^.Next;
+  Dispose(temp);
+end;
+{------------------------------------------------------------------------------}
+function TStack.GetOperand: extended;
+begin
+  Result:=TopOfStack^.AOperand;
+end;
+{------------------------------------------------------------------------------}
+function TStack.GetOperator: char;
+begin
+  Result:=TopOfStack^.AOperator;
+end;
+{------------------------------------------------------------------------------}
+function TStack.Count: integer;
+var temp: TStackItem;
+begin
+  temp:=TopOfStack;
+  Count:=0;
+  while not(temp=nil) do
+    begin
+      temp:=temp^.Next;
+      Inc(Count);
+    end;
+end;
+{------------------------------------------------------------------------------}
+
+{ TVariable }
+{------------------------------------------------------------------------------}
+constructor TVariable.Create;
+begin
+  FirstVariable:=nil;
+  LastVariable:=nil;
+end;
+{------------------------------------------------------------------------------}
+destructor TVariable.Free;
+var CurrentItem: TVariableItem;
+begin
+  CurrentItem:=FirstVariable;
+  while CurrentItem<>nil do
+    begin
+      Dispose(CurrentItem);
+      CurrentItem:=CurrentItem^.Next;
+    end;
+end;
+{------------------------------------------------------------------------------}
+procedure TVariable.ChangeVariable(VarName: string; VarResult: extended);
+var CurrentItem: TVariableItem;
+begin
+  CurrentItem:=FirstVariable;
+  while CurrentItem<>nil do
+    begin
+      if SameText(VarName,CurrentItem^.VarName) then
+        begin
+          CurrentItem^.VarResult:=VarResult;
+          Break;
+        end;
+      CurrentItem:=CurrentItem^.Next;
+    end;
+end;
+{------------------------------------------------------------------------------}
+function TVariable.GetVariable(VarName: string): extended;
+var CurrentItem: TVariableItem;
+begin
+  CurrentItem:=FirstVariable;
+  while CurrentItem<>nil do
+    begin
+      if SameText(VarName,CurrentItem^.VarName) then
+        begin
+          Result:=CurrentItem^.VarResult;
+          Exit;
+        end;
+      CurrentItem:=CurrentItem^.Next;
+    end;
+  raise ErrorMsg.Create('Variable "'+VarName+'" does not exist');
+end;
+{------------------------------------------------------------------------------}
+procedure TVariable.AddVariable(VarName: string; VarResult: extended);
+var NewVariable: TVariableItem;
+begin
+  if IsDuplicateVariable(VarName) then Exit;
+  New(NewVariable);
+  NewVariable^.VarName:=VarName;
+  NewVariable^.VarResult:=VarResult;
+  NewVariable^.Next:=nil;
+
+  if FirstVariable=nil then
+    begin
+      FirstVariable:=NewVariable;
+      LastVariable:=NewVariable;
+    end
+  else
+    begin
+      LastVariable^.Next:=NewVariable;
+      LastVariable:=NewVariable;
+    end;
+end;
+{------------------------------------------------------------------------------}
+procedure TVariable.DelVariable(VarName: string);
+var CurrentItem, PrevItem: TVariableItem;
+begin
+  CurrentItem:=FirstVariable;
+  PrevItem:=nil;
+  while CurrentItem<>nil do
+    begin
+      if SameText(VarName,CurrentItem^.VarName) then
+        begin
+          if PrevItem=nil then FirstVariable:=CurrentItem^.Next
+          else PrevItem^.Next:=CurrentItem^.Next;
+          if CurrentItem=LastVariable then
+            begin
+              if PrevItem<>nil then LastVariable:=PrevItem;
+              LastVariable^.Next:=nil;
+            end;
+          Dispose(CurrentItem);
+          Exit;
+        end;
+      PrevItem:=CurrentItem;
+      CurrentItem:=CurrentItem^.Next;
+    end;
+end;
+{------------------------------------------------------------------------------}
+function TVariable.IsDuplicateVariable(const VarName: string): boolean;
+var CurrentItem: TVariableItem;
+begin
+  CurrentItem:=FirstVariable;
+  while CurrentItem<>nil do
+    begin
+      if SameText(VarName,CurrentItem^.VarName) then
+        begin
+          Result:=true;
+          Exit;
+        end;
+      CurrentItem:=CurrentItem^.Next;
+    end;
+  Result:=false;
+end;
+{------------------------------------------------------------------------------}
+function TVariable.GetAllVariables: TStringListPointer;
+var
+  CurrentItem: TVariableItem;
+  List: TStringList;
+begin
+  List:=TStringList.Create;
+  CurrentItem:=FirstVariable;
+  while CurrentItem<>nil do
+    begin
+      List.Add(CurrentItem^.VarName);
+      List.Add(FloatToStr(CurrentItem^.VarResult));
+      CurrentItem:=CurrentItem^.Next;
+    end;
+  Result:=@List;
+end;
+{------------------------------------------------------------------------------}
+
+{ TParser }
+{------------------------------------------------------------------------------}
+constructor TParser.Create;
+begin
+  Variable:=TVariable.Create;
+  Stack:=TStack.Create;
+end;
+{------------------------------------------------------------------------------}
+destructor TParser.Free;
+begin
+  Variable.Free;
+  Stack.Free;
+end;
+{------------------------------------------------------------------------------}
+function TParser.Tokenise(Expression: string): string;
+var
+  i, k, max, Minus: integer;
+  temp: string;
+  LastOperator: char;
+begin
+  temp:='';
+  for i:=1 to Length(Expression) do
+    if Expression[i]<>' ' then temp:=temp+Expression[i];
+  Result:='';
+  expression:=temp;
+  i:=0;
+  Minus:=0;
+  LastOperator:=Chr(0);
+  max:=Length(Expression);
+  if Expression[1]='-' then
+    begin
+      Inc(i);
+      Inc(Minus);
+      Result:='(~';
+    end;
+  while i<max do
+    begin
+      Inc(i);
+      if Expression[i] in['+','-','*','/','(',')','^'] then
+        begin
+          if Expression[i]='-' then
+            begin
+              if Expression[i+1]='-' then
+                begin
+                  k:=2;
+                  Inc(i,2);
+                  while Expression[i]='-' do
+                    begin
+                      Inc(i);
+                      Inc(k);
+                    end;
+                  Dec(i);
+                  if (k mod 2 <> 0) then
+                    begin
+                      if LastOperator =' ' then Result:=Result+'+ (~'
+                      else
+                        begin
+                          Result:=Result+'(~';
+                          LastOperator:='-';
+                        end;
+                      Inc(Minus);
+                    end;
+                end
+              else if Expression[i-1] in['+','-','*','/','^'] then
+                begin
+                  Result:=Result+'(~';
+                  Inc(Minus);
+                end
+              else if (Expression[i]='-') and (Expression[i-1] in['0'..'9','.']) then
+                begin
+                  Result:=Result+'+(~';
+                  Inc(Minus);
+                end
+              else Result:=Result+Expression[i]
+            end
+          else
+            begin
+              Result:=Result+Expression[i];
+              LastOperator:=Expression[i];
+            end;
+        end
+      else if Expression[i] in['0'..'9','.'] then
+        begin
+          if not(Expression[i+1] in['0'..'9','.']) and (Minus>0) then
+            begin
+              Result:=Result+Expression[i]+')';
+              Dec(Minus);
+            end
+          else
+            begin
+              while Expression[i] in['0'..'9','.'] do
+                begin
+                  Result:=Result+Expression[i];
+                  Inc(i);
+                end;
+              Dec(i);
+            end;
+          LastOperator:=' ';
+        end
+      else
+        begin
+          temp:='';
+          while not(Expression[i] in['+','-','*','/','(',')','^','.']) do
+            begin
+              if i>max then Break;
+              temp:=temp+Expression[i];
+              Inc(i);
+            end;
+            Dec(i);
+          temp:=FloatToStr(Variable.GetVariable(temp));
+          if temp[1]='-' then
+            begin
+              temp[1]:='~';
+              Result:=Result+'('+temp+')';
+            end
+          else Result:=Result+temp;
+        end;
+    end;
+
+  while Minus>0 do
+    begin
+      Result:=Result+')';
+      Dec(Minus);
+    end;
+end;
+{------------------------------------------------------------------------------}
+function TParser.InfixToPostfix(Expression: string): string;
+const Bidmas: string = '~^/*+-';
+var
+  postfix: string = '';
+  i, j, StackPrecedence, ExpressionPrecedence, BracketCount: integer;
+begin
+  Expression:=Tokenise(Expression);
+  i:=0;
+  BracketCount:=0;
+  while i<= Length(Expression) do
+    begin
+      Inc(i);
+      case Expression[i] of
+        '0'..'9','.': begin
+        if Expression[i+1]in['0'..'9','.'] then
+          begin
+            while Expression[i] in['0'..'9','.'] do
+              begin
+                postfix:=postfix+Expression[i];
+                Inc(i);
+              end;
+            Dec(i);
+          end
+         else postfix:=postfix+Expression[i];
+            postfix:=postfix+' ';
+        end;
+        '(': begin Stack.Push(Expression[i]); inc(BracketCount); end;
+        ')':begin
+              Dec(BracketCount);
+              while Stack.GetOperator<>'(' do
+                begin
+                  postfix:=postfix+Stack.GetOperator+' ';
+                  Stack.Pop;
+                end;
+              Stack.Pop;
+              if BracketCount=0 then
+                while not stack.IsEmpty do
+                  begin
+                    postfix:=postfix+Stack.GetOperator+' ';
+                    stack.Pop;
+                  end;
+            end;
+        '+','-','*','/','^','~': begin
+          if Stack.IsEmpty then Stack.Push(Expression[i])
+          else
+            begin
+              for j:=1 to 6 do
+                if Expression[i]=Bidmas[j] then ExpressionPrecedence:=j;
+              for j:=1 to 6 do
+                if Stack.GetOperator=Bidmas[j] then StackPrecedence:=j;
+              if (Expression[i]='^') and (Stack.GetOperator='^') then
+                begin
+                  while (StackPrecedence>ExpressionPrecedence) and (not Stack.IsEmpty) do
+                    begin
+                      if Stack.GetOperator='(' then Break;
+                      postfix:=postfix+Stack.GetOperator+' ';
+                      Stack.Pop;
+                      if (Stack.IsEmpty) or (Stack.GetOperator='(') then Break
+                      else
+                      for j:=1 to 6 do
+                        if Stack.GetOperator=Bidmas[j] then StackPrecedence:=j;
+                    end;
+                end
+              else
+                begin
+                  while (StackPrecedence<=ExpressionPrecedence) and (not Stack.IsEmpty) do
+                    begin
+                      if Stack.GetOperator='(' then Break;
+                      postfix:=postfix+Stack.GetOperator+' ';
+                      Stack.Pop;
+                      if (Stack.IsEmpty) or (Stack.GetOperator='(') then Break
+                      else
+                      for j:=1 to 6 do
+                        if Stack.GetOperator=Bidmas[j] then StackPrecedence:=j;
+                    end;
+                end;
+                Stack.Push(Expression[i]);
+            end;
+        end;
+    end;
+  end;
+
+  while not Stack.IsEmpty do
+    begin
+      postfix:=postfix+Stack.GetOperator+' ';
+      Stack.Pop;
+    end;
+  Result:=Postfix;
+end;
+{------------------------------------------------------------------------------}
+function TParser.EvalPostfix(Postfix: string): extended;
+var
+  i: integer;
+  temp1, temp2: extended;
+  tempstr: string;
+begin
+  i:=0;
+  while i<Length(Postfix) do
+    begin
+      Inc(i);
+      if Postfix[i] in['0'..'9'] then
+        begin
+          tempstr:='';
+          while Postfix[i]<>' ' do
+            begin
+              tempstr:=tempstr+Postfix[i];
+              Inc(i);
+            end;
+          Stack.Push(StrToFloat(tempstr));
+        end
+      else if Postfix[i] in['+','-','*','/','^','~'] then
+        begin
+          temp1:=Stack.GetOperand;
+          Stack.Pop;
+          if (Stack.Count>=1) and (Postfix[i]<>'~') then
+            begin
+              temp2:=Stack.GetOperand;
+              Stack.Pop;
+            end
+          else if Postfix[i]<>'~' then raise ErrorMsg.Create('Error with expression');
+          case Postfix[i] of
+            '+': Stack.Push(temp2+temp1);
+            '-': Stack.Push(temp2-temp1);
+            '*': Stack.Push(temp2*temp1);
+            '/': Stack.Push(temp2/temp1);
+            '^': Stack.Push(Power(temp2,temp1));
+            '~': Stack.Push(temp1*-1);
+          end;
+        end;
+    end;
+  Result:=Stack.GetOperand;
+  while not Stack.IsEmpty do Stack.Pop;
+end;
+{------------------------------------------------------------------------------}
+function TParser.EvalInfix(Postfix: string): extended;
+begin
+  Postfix:=InfixToPostfix(Postfix);
+  Result:=EvalPostfix(Postfix);
+end;
+{------------------------------------------------------------------------------}
+end.
+
+{procedure TParser.FindBrackets(const Expression: string);
+var
+  i, j, BracketPairs: integer;
+  Duplicate: boolean;
+begin
+  StartList:=TStringList.Create;
+  EndList:=TStringList.Create;
+  BracketPairs:=0;
+
+  for i:=1 to Length(Expression) do
+    if Expression[i]='(' then
+      begin
+        StartList.Add(IntToStr(i));
+        Inc(BracketPairs);
+      end;
+  while BracketPairs<>0 do
+    begin
+      for i:=StrToInt(StartList.Strings[BracketPairs-1])+1 to Length(Expression) do
+        begin
+          if Expression[i]=')' then
+            begin
+              Duplicate:=false;
+              if EndList.Count<>0 then
+                for j:=0 to EndList.Count-1 do
+                  begin
+                    if EndList.Strings[j]=IntToStr(i) then
+                      begin
+                        Duplicate:=true;
+                        Break;
+                      end;
+                  end
+              else
+                begin
+                  EndList.Add(IntToStr(i));
+                  Break;
+                end;
+              if Duplicate=false then
+                begin
+                  EndList.Add(IntToStr(i));
+                  Break;
+                end;
+            end;
+        end;
+        Dec(BracketPairs);
+    end;
+end;}
+{------------------------------------------------------------------------------}
+{procedure TParser.SortBracketOrder;
+var
+  i, j, k: integer;
+  SortByRange: TStringList;
+begin
+  k:=0;
+  for i:=0 to (StartList.Count div 2)-1 do EndList.Exchange(i,EndList.Count-1-i); // Syncs EndList with StartList.
+  SortByRange:=TStringList.Create;
+  try
+    for i:=0 to StartList.Count-1 do
+      SortByRange.Add(IntToStr(StrToInt(EndList.Strings[i])-StrToInt(StartList.Strings[i])));
+    j:=0;
+    for i:=0 to StartList.Count-1 do
+      begin
+        for j:=0 to StartList.Count-2-k do
+          begin
+            if StrToInt(SortByRange.Strings[j])>StrToInt(SortByRange.Strings[j+1]) then
+              begin
+                SortByRange.Exchange(j,j+1);
+                StartList.Exchange(j,j+1);
+                EndList.Exchange(j,j+1);
+              end;
+          end;
+        Inc(k);
+      end;
+  finally
+    SortByRange.Free;
+  end;
+end;}

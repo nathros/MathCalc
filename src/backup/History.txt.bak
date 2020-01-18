@@ -1,0 +1,18 @@
+﻿17/11/2009  v0.0.0.0
+  ♦ Started development of project ☺.
+  ♦ Added Main form and a main menu to form.
+  ♦ Added UnitConvert form.
+  ♦ Added Tools and submenu Unit Conversion to main menu.
+  ♦ Linked Unit Conversion UnitConvert form.
+  ♦ Added some units to unit convert list.
+
+18/11/2009
+  ♦ Added UnitEdit form.
+  ♦ Started development of unit conversion database.
+  ♦ Development temporarily stopped.
+
+31/01/2010
+  ♦ Development started again.
+  ♦ Unit conversion database and unit edit from removed due to time constraints.
+  ♦ Started development on calulator frame, basic functionality finished.
+  ♦

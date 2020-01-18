@@ -1,0 +1,72 @@
+object MainForm: TMainForm
+  Left = 589
+  Height = 398
+  Top = 213
+  Width = 405
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'MathCalc'
+  ClientHeight = 378
+  ClientWidth = 405
+  KeyPreview = True
+  Menu = MainMenu
+  Position = poDesktopCenter
+  LCLVersion = '0.9.28.2'
+  inline MathTopicFrame: TMathTopicFrame
+    Height = 305
+    Width = 532
+    ClientHeight = 305
+    ClientWidth = 532
+    TabOrder = 2
+    Visible = False
+    inherited TopicTree: TTreeView
+      ShowLines = True
+      ShowRoot = True
+    end
+  end
+  object StatusBar: TStatusBar
+    Left = 0
+    Height = 23
+    Top = 355
+    Width = 405
+    Panels = <>
+  end
+  inline CalcFrame: TCalcFrame
+    Height = 344
+    Width = 397
+    ClientHeight = 344
+    ClientWidth = 397
+    DesignLeft = 546
+    DesignTop = 249
+  end
+  object MainMenu: TMainMenu
+    left = 16
+    top = 312
+    object MenuTools: TMenuItem
+      Caption = 'Tools'
+      object MenuNumGen: TMenuItem
+        Caption = 'Number Generator'
+        OnClick = MenuNumGenClick
+      end
+      object MenuUnitConv: TMenuItem
+        Caption = 'Unit Conversion'
+        OnClick = MenuUnitConvClick
+      end
+      object MenuGraph: TMenuItem
+        Caption = 'Graph'
+        OnClick = MenuGraphClick
+      end
+      object MenuRevise: TMenuItem
+        Caption = 'Revise Topic'
+        OnClick = MenuReviseClick
+      end
+    end
+    object MenuHelp: TMenuItem
+      Caption = 'Help'
+      object MenuAbout: TMenuItem
+        Caption = 'About'
+        OnClick = MenuAboutClick
+      end
+    end
+  end
+end

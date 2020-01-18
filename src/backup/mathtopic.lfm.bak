@@ -1,0 +1,146 @@
+object MathTopicFrame: TMathTopicFrame
+  Left = 0
+  Height = 322
+  Top = 0
+  Width = 803
+  ClientHeight = 322
+  ClientWidth = 803
+  TabOrder = 0
+  DesignLeft = 435
+  DesignTop = 316
+  object TopicTree: TTreeView
+    AnchorSideRight.Control = Notebook
+    Left = 8
+    Height = 288
+    Top = 8
+    Width = 176
+    DefaultItemHeight = 16
+    ReadOnly = True
+    ScrollBars = ssAutoBoth
+    TabOrder = 0
+    OnSelectionChanged = TopicTreeSelectionChanged
+    Options = [tvoAutoItemHeight, tvoHideSelection, tvoKeepCollapsedNodes, tvoReadOnly, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips]
+    Items.Data = {
+      F9FFFFFF020002000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF010000000000
+      0000010C000000547269676F6E6F6D65747279FFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFF000000000000000000050000004974656D31FFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFF030000000000000001070000004E756D62657273FFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFF0000000000000000001600000053696D756C74616E656F
+      7573204571756174696F6E73FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00000000
+      000000000015000000547269616C20616E6420496D70726F76656D656E74FFFF
+      FFFFFFFFFFFFFFFFFFFFFFFFFFFF000000000000000000050000004974656D35
+    }
+  end
+  object Notebook: TNotebook
+    Left = 232
+    Height = 292
+    Top = 8
+    Width = 315
+    PageIndex = 0
+    TabOrder = 1
+    object SimEqu: TPage
+      Caption = 'SimEqu'
+      ClientWidth = 307
+      ClientHeight = 265
+      object SimEquLabel1: TLabel
+        Left = 20
+        Height = 15
+        Top = 17
+        Width = 67
+        AutoSize = True
+        Caption = 'SimEquLabel1'
+        Color = clBtnFace
+        ParentColor = False
+        TabOrder = 2
+      end
+      object SimEquLabel2: TLabel
+        Left = 20
+        Height = 15
+        Top = 49
+        Width = 67
+        AutoSize = True
+        Caption = 'SimEquLabel2'
+        Color = clBtnFace
+        ParentColor = False
+        TabOrder = 3
+      end
+      object SimEquLabel3: TLabel
+        Left = 20
+        Height = 15
+        Top = 113
+        Width = 67
+        AutoSize = True
+        Caption = 'SimEquLabel3'
+        Color = clBtnFace
+        ParentColor = False
+        TabOrder = 4
+      end
+      object SimEquLabel4: TLabel
+        Left = 20
+        Height = 15
+        Top = 161
+        Width = 67
+        AutoSize = True
+        Caption = 'SimEquLabel4'
+        Color = clBtnFace
+        ParentColor = False
+        TabOrder = 5
+      end
+      object SimEquCombo: TComboBox
+        Left = 252
+        Height = 22
+        Top = 17
+        Width = 34
+        ItemHeight = 14
+        ItemIndex = 0
+        Items.Strings = (
+          'x'
+          'y'
+        )
+        Style = csDropDownList
+        TabOrder = 0
+        Text = 'x'
+      end
+      object SinEquNext: TButton
+        Left = 211
+        Height = 25
+        Top = 65
+        Width = 75
+        Caption = 'SinEquNext'
+        OnClick = SinEquNextClick
+        TabOrder = 1
+      end
+    end
+    object TriandImp: TPage
+      Caption = 'TriandImp'
+    end
+    object Item1: TPage
+      Caption = 'Item1'
+    end
+  end
+  object Button1: TButton
+    Left = 576
+    Height = 38
+    Top = 72
+    Width = 128
+    Caption = 'Button1'
+    TabOrder = 2
+  end
+  object ShowHideTree: TArrow
+    AnchorSideRight.Control = Notebook
+    Left = 200
+    Height = 104
+    Top = 96
+    Width = 24
+    BorderSpacing.Right = 8
+    OnClick = ShowHideTreeClick
+  end
+  object ListBox1: TListBox
+    Left = 585
+    Height = 149
+    Top = 122
+    Width = 124
+    ItemHeight = 0
+    TabOrder = 4
+  end
+end

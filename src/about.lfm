@@ -1,0 +1,102 @@
+object AboutForm: TAboutForm
+  Left = 576
+  Height = 306
+  Top = 276
+  Width = 272
+  BorderIcons = []
+  BorderStyle = bsSingle
+  Caption = 'About'
+  ClientHeight = 306
+  ClientWidth = 272
+  OnCreate = FormCreate
+  OnHide = FormHide
+  OnShow = FormShow
+  Position = poMainFormCenter
+  LCLVersion = '1.6.0.4'
+  object Bevel2: TBevel
+    Left = 8
+    Height = 256
+    Top = 8
+    Width = 256
+    Style = bsRaised
+  end
+  object Label1: TLabel
+    AnchorSideLeft.Control = Bevel2
+    AnchorSideTop.Control = Bevel2
+    AnchorSideRight.Control = Bevel2
+    AnchorSideRight.Side = asrBottom
+    Left = 8
+    Height = 15
+    Top = 16
+    Width = 256
+    Alignment = taCenter
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 8
+    BorderSpacing.Bottom = 4
+    Caption = 'MathCalc'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object Bevel1: TBevel
+    AnchorSideLeft.Control = Bevel2
+    AnchorSideTop.Control = Label1
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Bevel2
+    AnchorSideRight.Side = asrBottom
+    Left = 24
+    Height = 2
+    Top = 35
+    Width = 224
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Left = 16
+    BorderSpacing.Right = 16
+  end
+  object Label2: TLabel
+    AnchorSideLeft.Control = Bevel1
+    AnchorSideTop.Control = Bevel1
+    AnchorSideRight.Control = Bevel1
+    AnchorSideRight.Side = asrBottom
+    Left = 24
+    Height = 15
+    Top = 43
+    Width = 224
+    Alignment = taCenter
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 8
+    Caption = 'Nathan Bartram'
+    ParentColor = False
+  end
+  object Label3: TLabel
+    AnchorSideLeft.Control = Bevel1
+    AnchorSideTop.Control = Label2
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Bevel1
+    AnchorSideRight.Side = asrBottom
+    Left = 24
+    Height = 60
+    Top = 74
+    Width = 224
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 16
+    Caption = 'General purpose maths utility that uses an implementation of the stack based expression parser (shunting yard) and learning aid.'
+    ParentColor = False
+    WordWrap = True
+  end
+  object btnClose: TButton
+    Left = 72
+    Height = 24
+    Top = 272
+    Width = 128
+    Caption = 'Close'
+    OnClick = btnCloseClick
+    TabOrder = 0
+  end
+  object CircleMove: TTimer
+    Enabled = False
+    Interval = 20
+    OnTimer = CircleMoveTimer
+    left = 224
+    top = 272
+  end
+end

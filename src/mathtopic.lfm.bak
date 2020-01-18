@@ -1,0 +1,176 @@
+object MathTopicFrame: TMathTopicFrame
+  Left = 0
+  Height = 302
+  Top = 0
+  Width = 526
+  ClientHeight = 302
+  ClientWidth = 526
+  TabOrder = 0
+  DesignLeft = 425
+  DesignTop = 292
+  object TopicTree: TTreeView
+    AnchorSideRight.Control = Notebook
+    Left = 8
+    Height = 288
+    Top = 8
+    Width = 176
+    DefaultItemHeight = 18
+    ReadOnly = True
+    ScrollBars = ssAutoBoth
+    TabOrder = 0
+    OnSelectionChanged = TopicTreeSelectionChanged
+    Options = [tvoAutoItemHeight, tvoHideSelection, tvoKeepCollapsedNodes, tvoReadOnly, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips]
+    Items.Data = {
+      F9FFFFFF020001000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF010000000000
+      000001070000004E756D62657273FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0000
+      000000000000001600000053696D756C74616E656F7573204571756174696F6E
+      73
+    }
+  end
+  object Notebook: TNotebook
+    Left = 208
+    Height = 288
+    Top = 8
+    Width = 312
+    PageIndex = 0
+    TabOrder = 1
+    TabStop = True
+    object SimEqu: TPage
+      object SimEquLabel1: TLabel
+        Left = 20
+        Height = 15
+        Top = 17
+        Width = 74
+        Caption = 'SimEquLabel1'
+        ParentColor = False
+      end
+      object SimEquLabel2: TLabel
+        Left = 20
+        Height = 15
+        Top = 44
+        Width = 74
+        Caption = 'SimEquLabel2'
+        ParentColor = False
+      end
+      object SimEquLabel3: TLabel
+        Left = 20
+        Height = 15
+        Top = 113
+        Width = 74
+        Caption = 'SimEquLabel3'
+        ParentColor = False
+      end
+      object SimEquLabel4: TLabel
+        Left = 20
+        Height = 15
+        Top = 161
+        Width = 74
+        Caption = 'SimEquLabel4'
+        ParentColor = False
+      end
+      object SimEquLine: TShape
+        Left = 8
+        Height = 1
+        Top = 71
+        Width = 134
+        Visible = False
+      end
+      object SimEquAdd: TLabel
+        Left = 108
+        Height = 15
+        Top = 57
+        Width = 62
+        Caption = 'SimEquAdd'
+        ParentColor = False
+        Visible = False
+      end
+      object SimEquLabelExp1: TLabel
+        Left = 204
+        Height = 88
+        Top = 84
+        Width = 94
+        AutoSize = False
+        Caption = 'SimEquLabelExp1'
+        ParentColor = False
+        Visible = False
+        WordWrap = True
+      end
+      object SimEquCombo: TComboBox
+        Left = 252
+        Height = 23
+        Top = 50
+        Width = 34
+        ItemHeight = 15
+        ItemIndex = 0
+        Items.Strings = (
+          'x'
+          'y'
+        )
+        Style = csDropDownList
+        TabOrder = 0
+        Text = 'x'
+        Visible = False
+      end
+      object SimEquNext: TButton
+        Left = 228
+        Height = 25
+        Top = 244
+        Width = 75
+        Caption = 'Next Step'
+        OnClick = SimEquNextClick
+        TabOrder = 1
+      end
+      object SelDif: TComboBox
+        Left = 180
+        Height = 23
+        Top = 17
+        Width = 106
+        ItemHeight = 15
+        Items.Strings = (
+          'Easy'
+          'Medium'
+          'Hard'
+        )
+        TabOrder = 2
+        Text = 'Select Difficulty'
+      end
+    end
+    object TriandImp: TPage
+    end
+    object Item1: TPage
+    end
+    object Blank: TPage
+      object BlankLabel: TLabel
+        Left = 0
+        Height = 280
+        Top = 0
+        Width = 304
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 'Please select a topic.'
+        Layout = tlCenter
+        ParentColor = False
+      end
+    end
+  end
+  object ShowHideTree: TArrow
+    AnchorSideRight.Control = Notebook
+    Left = 184
+    Height = 24
+    Top = 140
+    Width = 24
+    BorderSpacing.Right = 8
+    Constraints.MinHeight = 8
+    Constraints.MinWidth = 8
+    OnClick = ShowHideTreeClick
+  end
+  object ListBox1: TListBox
+    Left = 585
+    Height = 149
+    Top = 122
+    Width = 124
+    ItemHeight = 0
+    TabOrder = 2
+    Visible = False
+  end
+end

@@ -1,0 +1,102 @@
+object AboutForm: TAboutForm
+  Left = 576
+  Height = 306
+  Top = 276
+  Width = 272
+  BorderIcons = []
+  BorderStyle = bsSingle
+  Caption = 'About'
+  ClientHeight = 306
+  ClientWidth = 272
+  OnCreate = FormCreate
+  OnHide = FormHide
+  OnShow = FormShow
+  Position = poMainFormCenter
+  LCLVersion = '0.9.28.2'
+  object Bevel2: TBevel
+    Left = 8
+    Height = 256
+    Top = 8
+    Width = 256
+    Style = bsRaised
+  end
+  object Label1: TLabel
+    AnchorSideLeft.Control = Bevel2
+    AnchorSideTop.Control = Bevel2
+    AnchorSideRight.Control = Bevel2
+    AnchorSideRight.Side = asrBottom
+    Left = 8
+    Height = 16
+    Top = 16
+    Width = 256
+    Alignment = taCenter
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 8
+    BorderSpacing.Bottom = 4
+    Caption = 'MathCalc'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object Bevel1: TBevel
+    AnchorSideLeft.Control = Bevel2
+    AnchorSideTop.Control = Label1
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Bevel2
+    AnchorSideRight.Side = asrBottom
+    Left = 24
+    Height = 2
+    Top = 36
+    Width = 224
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Left = 16
+    BorderSpacing.Right = 16
+  end
+  object Label2: TLabel
+    AnchorSideLeft.Control = Bevel1
+    AnchorSideTop.Control = Bevel1
+    AnchorSideRight.Control = Bevel1
+    AnchorSideRight.Side = asrBottom
+    Left = 24
+    Height = 16
+    Top = 44
+    Width = 224
+    Alignment = taCenter
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 8
+    Caption = 'A2 Computing Project – Nathan Bartram'
+    ParentColor = False
+  end
+  object Label3: TLabel
+    AnchorSideLeft.Control = Bevel1
+    AnchorSideTop.Control = Label2
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Bevel1
+    AnchorSideRight.Side = asrBottom
+    Left = 24
+    Height = 91
+    Top = 76
+    Width = 224
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 16
+    Caption = 'General purpose maths utility that houses a stack based expression parser and learning aid.'#13#10#13#10'Compiled on 21st April 2010, two days before the deadline :)'
+    ParentColor = False
+    WordWrap = True
+  end
+  object btnClose: TButton
+    Left = 72
+    Height = 24
+    Top = 272
+    Width = 128
+    Caption = 'Close'
+    OnClick = btnCloseClick
+    TabOrder = 0
+  end
+  object CircleMove: TTimer
+    Enabled = False
+    Interval = 20
+    OnTimer = CircleMoveTimer
+    left = 224
+    top = 272
+  end
+end

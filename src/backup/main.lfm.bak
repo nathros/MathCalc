@@ -1,0 +1,30 @@
+object MainForm: TMainForm
+  Left = 617
+  Height = 352
+  Top = 309
+  Width = 510
+  Caption = 'Form1'
+  ClientHeight = 328
+  ClientWidth = 502
+  Menu = MainMenu
+  LCLVersion = '0.9.28'
+  object StatusBar: TStatusBar
+    Left = 0
+    Height = 20
+    Top = 308
+    Width = 502
+    Panels = <>
+    SimplePanel = False
+  end
+  object MainMenu: TMainMenu
+    left = 368
+    top = 200
+    object MainMenuTools: TMenuItem
+      Caption = 'Tools'
+      object MainMenuToolsUnitConversion: TMenuItem
+        Caption = 'Unit Conversion'
+        OnClick = MainMenuToolsUnitConversionClick
+      end
+    end
+  end
+end

@@ -1,0 +1,43 @@
+unit Calc;
+
+{$mode objfpc}{$H+}
+
+interface
+
+uses
+  Classes, SysUtils, FileUtil, LResources, Forms, Controls, Graphics, Dialogs,
+  StdCtrls;
+
+type
+
+  { TCalcForm }
+
+  TCalcForm = class(TForm)
+    CalcEquation: TButton;
+    EquationInput: TEdit;
+    Label1: TLabel;
+    procedure CalcEquationClick(Sender: TObject);
+  private
+    { private declarations }
+  public
+    { public declarations }
+  end; 
+
+var
+  CalcForm: TcalcForm;
+
+implementation
+
+{ TCalcForm }
+
+procedure TCalcForm.CalcEquationClick(Sender: TObject);
+var Equation: string;
+begin
+  Equation:=EquationInput.Text;
+end;
+
+initialization
+  {$I clac.lrs}
+
+end.
+

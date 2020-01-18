@@ -1,0 +1,31 @@
+{ This is an automatically generated lazarus resource file }
+
+LazarusResources.Add('TNumberGenForm','FORMDATA',[
+  'TPF0'#14'TNumberGenForm'#13'NumberGenForm'#4'Left'#2'}'#6'Height'#3'W'#1#3'T'
+  +'op'#3'z'#1#5'Width'#3'o'#1#11'BorderIcons'#11#12'biSystemMenu'#10'biMinimiz'
+  +'e'#0#11'BorderStyle'#7#8'bsSingle'#7'Caption'#6#16'Number Generator'#12'Cli'
+  +'entHeight'#3'W'#1#11'ClientWidth'#3'o'#1#8'Position'#7#16'poMainFormCenter'
+  +#10'LCLVersion'#6#7'1.6.0.4'#0#8'TListBox'#10'OutputList'#4'Left'#2#16#6'Hei'
+  +'ght'#3'8'#1#3'Top'#2#16#5'Width'#3#152#0#10'ItemHeight'#2#0#8'TabOrder'#2#0
+  +#0#0#9'TGroupBox'#11'MethodGroup'#4'Left'#3#184#0#6'Height'#3#184#0#3'Top'#2
+  +'`'#5'Width'#3#176#0#7'Caption'#6#8'Settings'#12'ClientHeight'#3#164#0#11'Cl'
+  +'ientWidth'#3#172#0#8'TabOrder'#2#1#0#6'TLabel'#10'LabelStart'#4'Left'#2#9#6
+  +'Height'#2#15#3'Top'#2'H'#5'Width'#2'X'#7'Caption'#6#15'Starting Number'#11
+  +'ParentColor'#8#0#0#6'TLabel'#8'LabelEnd'#4'Left'#2#9#6'Height'#2#15#3'Top'#2
+  +'x'#5'Width'#2'W'#7'Caption'#6#15'Numbers to find'#11'ParentColor'#8#0#0#12
+  +'TRadioButton'#12'Method1Radio'#4'Left'#2#6#6'Height'#2#19#3'Top'#2#8#5'Widt'
+  +'h'#3#169#0#7'Caption'#6#29'Generate a specific quantity.'#7'Checked'#9#7'On'
+  +'Click'#7#17'Method1RadioClick'#14'ParentBidiMode'#8#8'TabOrder'#2#0#7'TabSt'
+  +'op'#9#0#0#12'TRadioButton'#12'Method2Radio'#4'Left'#2#6#6'Height'#2#19#3'To'
+  +'p'#2'('#5'Width'#3#174#0#7'Caption'#6#28'Find numbers in given range.'#7'On'
+  +'Click'#7#17'Method2RadioClick'#8'TabOrder'#2#1#0#0#9'TSpinEdit'#11'MethodSt'
+  +'art'#4'Left'#2#6#6'Height'#2#23#3'Top'#2'X'#5'Width'#2'|'#8'MaxValue'#4#0
+  +#202#154';'#8'TabOrder'#2#2#0#0#9'TSpinEdit'#9'MethodEnd'#4'Left'#2#6#6'Heig'
+  +'ht'#2#23#3'Top'#3#136#0#5'Width'#2'|'#8'MaxValue'#4#0#202#154';'#8'TabOrder'
+  +#2#3#0#0#0#9'TComboBox'#9'GenSelect'#4'Left'#3#185#0#6'Height'#2#23#3'Top'#2
+  +'8'#5'Width'#2'x'#10'ItemHeight'#2#15#9'ItemIndex'#2#0#13'Items.Strings'#1#6
+  +#5'Prime'#6#6'Square'#6#8'Triangle'#6#9'Composite'#0#5'Style'#7#14'csDropDow'
+  +'nList'#8'TabOrder'#2#2#4'Text'#6#5'Prime'#0#0#7'TButton'#5'Start'#4'Left'#3
+  +#185#0#6'Height'#2#22#3'Top'#2#16#5'Width'#2'I'#7'Caption'#6#5'Start'#7'OnCl'
+  +'ick'#7#10'StartClick'#8'TabOrder'#2#3#0#0#0
+]);

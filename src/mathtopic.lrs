@@ -1,0 +1,48 @@
+{ This is an automatically generated lazarus resource file }
+
+LazarusResources.Add('TMathTopicFrame','FORMDATA',[
+  'TPF0'#15'TMathTopicFrame'#14'MathTopicFrame'#4'Left'#2#0#6'Height'#3'.'#1#3
+  +'Top'#2#0#5'Width'#3#14#2#12'ClientHeight'#3'.'#1#11'ClientWidth'#3#14#2#8'T'
+  +'abOrder'#2#0#10'DesignLeft'#2#7#9'DesignTop'#3'D'#1#0#9'TTreeView'#9'TopicT'
+  +'ree'#23'AnchorSideRight.Control'#7#8'Notebook'#4'Left'#2#8#6'Height'#3' '#1
+  +#3'Top'#2#8#5'Width'#3#176#0#17'DefaultItemHeight'#2#18#8'ReadOnly'#9#10'Scr'
+  +'ollBars'#7#10'ssAutoBoth'#8'TabOrder'#2#0#18'OnSelectionChanged'#7#25'Topic'
+  +'TreeSelectionChanged'#7'Options'#11#17'tvoAutoItemHeight'#16'tvoHideSelecti'
+  +'on'#21'tvoKeepCollapsedNodes'#11'tvoReadOnly'#14'tvoShowButtons'#12'tvoShow'
+  +'Lines'#11'tvoShowRoot'#11'tvoToolTips'#0#10'Items.Data'#10'a'#0#0#0#249#255
+  +#255#255#2#0#1#0#0#0#255#255#255#255#255#255#255#255#255#255#255#255#255#255
+  +#255#255#1#0#0#0#0#0#0#0#1#7#0#0#0'Numbers'#255#255#255#255#255#255#255#255
+  +#255#255#255#255#255#255#255#255#0#0#0#0#0#0#0#0#0#22#0#0#0'Simultaneous Equ'
+  +'ations'#0#0#9'TNotebook'#8'Notebook'#4'Left'#3#208#0#6'Height'#3' '#1#3'Top'
+  +#2#8#5'Width'#3'8'#1#9'PageIndex'#2#0#8'TabOrder'#2#1#7'TabStop'#9#0#5'TPage'
+  +#6'SimEqu'#0#6'TLabel'#12'SimEquLabel1'#4'Left'#2#20#6'Height'#2#15#3'Top'#2
+  +#17#5'Width'#2'J'#7'Caption'#6#12'SimEquLabel1'#11'ParentColor'#8#0#0#6'TLab'
+  +'el'#12'SimEquLabel2'#4'Left'#2#20#6'Height'#2#15#3'Top'#2','#5'Width'#2'J'#7
+  +'Caption'#6#12'SimEquLabel2'#11'ParentColor'#8#0#0#6'TLabel'#12'SimEquLabel3'
+  +#4'Left'#2#20#6'Height'#2#15#3'Top'#2'q'#5'Width'#2'J'#7'Caption'#6#12'SimEq'
+  +'uLabel3'#11'ParentColor'#8#0#0#6'TLabel'#12'SimEquLabel4'#4'Left'#2#20#6'He'
+  +'ight'#2#15#3'Top'#3#161#0#5'Width'#2'J'#7'Caption'#6#12'SimEquLabel4'#11'Pa'
+  +'rentColor'#8#0#0#6'TShape'#10'SimEquLine'#4'Left'#2#8#6'Height'#2#1#3'Top'#2
+  +'G'#5'Width'#3#134#0#7'Visible'#8#0#0#6'TLabel'#9'SimEquAdd'#4'Left'#2'l'#6
+  +'Height'#2#15#3'Top'#2'9'#5'Width'#2'>'#7'Caption'#6#9'SimEquAdd'#11'ParentC'
+  +'olor'#8#7'Visible'#8#0#0#6'TLabel'#15'SimEquLabelExp1'#4'Left'#3#204#0#6'He'
+  +'ight'#2'X'#3'Top'#2'T'#5'Width'#2'^'#8'AutoSize'#8#7'Caption'#6#15'SimEquLa'
+  +'belExp1'#11'ParentColor'#8#7'Visible'#8#8'WordWrap'#9#0#0#9'TComboBox'#11'S'
+  +'imEquCombo'#4'Left'#3#252#0#6'Height'#2#23#3'Top'#2'2'#5'Width'#2'"'#10'Ite'
+  +'mHeight'#2#15#9'ItemIndex'#2#0#13'Items.Strings'#1#6#1'x'#6#1'y'#0#5'Style'
+  +#7#14'csDropDownList'#8'TabOrder'#2#0#4'Text'#6#1'x'#7'Visible'#8#0#0#7'TBut'
+  +'ton'#10'SimEquNext'#4'Left'#3#228#0#6'Height'#2#25#3'Top'#3#244#0#5'Width'#2
+  +'K'#7'Caption'#6#9'Next Step'#7'OnClick'#7#15'SimEquNextClick'#8'TabOrder'#2
+  +#1#0#0#9'TComboBox'#6'SelDif'#4'Left'#3#180#0#6'Height'#2#23#3'Top'#2#17#5'W'
+  +'idth'#2'j'#10'ItemHeight'#2#15#13'Items.Strings'#1#6#4'Easy'#6#6'Medium'#6#4
+  +'Hard'#0#8'TabOrder'#2#2#4'Text'#6#17'Select Difficulty'#0#0#0#5'TPage'#9'Tr'
+  +'iandImp'#0#0#5'TPage'#5'Item1'#0#0#5'TPage'#5'Blank'#0#6'TLabel'#10'BlankLa'
+  +'bel'#4'Left'#2#0#6'Height'#3#24#1#3'Top'#2#0#5'Width'#3'0'#1#9'Alignment'#7
+  +#8'taCenter'#8'AutoSize'#8#7'Caption'#6#22'Please select a topic.'#6'Layout'
+  +#7#8'tlCenter'#11'ParentColor'#8#0#0#0#0#6'TArrow'#12'ShowHideTree'#23'Ancho'
+  +'rSideRight.Control'#7#8'Notebook'#4'Left'#3#184#0#6'Height'#2#24#3'Top'#3
+  +#140#0#5'Width'#2#24#19'BorderSpacing.Right'#2#8#21'Constraints.MinHeight'#2
+  +#8#20'Constraints.MinWidth'#2#8#7'OnClick'#7#17'ShowHideTreeClick'#0#0#8'TLi'
+  +'stBox'#8'ListBox1'#4'Left'#3'I'#2#6'Height'#3#149#0#3'Top'#2'z'#5'Width'#2
+  +'|'#10'ItemHeight'#2#0#8'TabOrder'#2#2#7'Visible'#8#0#0#0
+]);

@@ -1,0 +1,184 @@
+unit UnitEdit;
+
+{$mode objfpc}{$H+}
+
+interface
+
+uses
+  Classes, SysUtils, FileUtil, LResources, Forms, Controls, Graphics, Dialogs,
+  StdCtrls, Grids, ExtCtrls;
+
+type
+
+  { TUnitEditForm }
+
+  TUnitEditForm = class(TForm)
+    btnSave: TButton;
+    Button1: TButton;
+    cbxLockHeaderRow: TCheckBox;
+    edValue: TEdit;
+    MeasureDet: TGroupBox;
+    lblCatRef: TLabel;
+    strgrdUnitList: TStringGrid;
+    procedure btnSaveClick(Sender: TObject);
+    procedure cbxLockHeaderRowChange(Sender: TObject);
+    procedure edValueChange(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure strgrdUnitListEditingDone(Sender: TObject);
+    procedure strgrdUnitListHeaderClick(Sender: TObject; Index: Integer);
+    procedure strgrdUnitListSelection(Sender: TObject; aCol, aRow: integer);
+  private
+    procedure ReadUnitListDatabase;
+    procedure WriteUnitListDatabase;
+    procedure UpdateUnitListGrid;
+    procedure GetSelectionPos(var x, y: byte);
+  public
+
+    { public declarations }
+  end;
+
+type
+  TUnitList = record                      // RefPointer shows which unit in list
+    UnitRefPointer: byte;                 // is the base of conversions
+    UnitName: array[0..32] of string[32]; // cell 0 contains name of column
+    UnitValue: array[1..32] of real;
+  end;
+
+
+var
+  UnitEditForm: TUnitEditForm;        { TODO : create unit database }
+  UnitList: array[1..8] of TUnitList;
+  UnitListFile: file of TUnitList;
+
+implementation
+
+{ TUnitEditForm }
+
+procedure TUnitEditForm.FormCreate(Sender: TObject);
+begin
+  ReadUnitListDatabase;
+  UpdateUnitListGrid;
+  strgrdUnitList.Modified:=false;
+end;
+
+procedure TUnitEditForm.FormDestroy(Sender: TObject);
+begin
+  if strgrdUnitList.Modified=true then         //incomplete
+  //if MessageDlg ('Question', 'Do you wish to Execute?', mtConfirmation, [mbYes, mbNo, mbIgnore],0) = mrYes
+end;
+
+procedure TUnitEditForm.strgrdUnitListEditingDone(Sender: TObject);
+var x, y: byte;
+begin
+  GetSelectionPos(x,y);
+  UnitList[x+1].UnitName[y]:=strgrdUnitList.Cells[x,y];
+end;
+
+procedure TUnitEditForm.strgrdUnitListHeaderClick(Sender: TObject; Index: Integer);
+begin
+  //strgrdUnitList.SortColRow(true,index);  { TODO : sort algorythm }
+end;
+
+procedure TUnitEditForm.btnSaveClick(Sender: TObject);
+begin
+  WriteUnitListDatabase;
+end;
+
+procedure TUnitEditForm.cbxLockHeaderRowChange(Sender: TObject);
+begin
+  case cbxLockHeaderRow.Checked of
+    false: strgrdUnitList.FixedRows:=0;
+    true: strgrdUnitList.FixedRows:=1;
+  end;
+end;
+
+procedure TUnitEditForm.GetSelectionPos(var x, y: byte);
+begin
+  x:=strgrdUnitList.selection.Left;
+  y:=strgrdUnitList.selection.Top;
+end;
+
+procedure TUnitEditForm.edValueChange(Sender: TObject);
+var x, y: byte;
+begin
+  GetSelectionPos(x,y);
+  try
+    UnitList[x+1].UnitValue[y]:=StrToFloat(edValue.Text);
+  except
+    UnitList[x+1].UnitValue[y]:=0;
+  end;
+end;
+
+procedure TUnitEditForm.strgrdUnitListSelection(Sender: TObject; aCol, aRow: Integer);
+begin
+  edValue.Text:=FloatToStr(UnitList[aCol+1].UnitValue[aRow]);
+end;
+
+procedure TUnitEditForm.ReadUnitListDatabase;
+var i, j: byte;  data: textfile;
+begin
+  AssignFile(UnitListFile, 'UnitDatabase.data');
+  Reset(UnitListFile);
+  i:=1;
+  while not EOF(UnitListFile) do
+    begin
+      Read(UnitListFile,UnitList[i]);
+      i:=i+1;
+    end;
+  CloseFile(UnitListFile);
+
+  //text database dump
+  assignfile(data, 'aaa.txt');
+  rewrite(data);
+  for i:=1 to 8 do
+  for j:=0 to 32 do writeln(data, IntTostr(i)+' '+inttostr(j)+' '+UnitList[i].UnitName[j]);
+  writeln(data,' ');
+  for i:=1 to 8 do
+  for j:=0 to 32 do writeln(data, IntTostr(i)+' '+inttostr(j)+' '+Floattostr(UnitList[i].UnitValue[j]));
+  closefile(data);
+  //
+end;
+
+procedure TUnitEditForm.WriteUnitListDatabase;
+var i: byte;
+begin
+  AssignFile(UnitListFile, 'UnitDatabase.data');
+  Rewrite(UnitListFile);
+  i:=0;
+  repeat
+    i:=i+1;
+    Write(UnitListFile,UnitList[i]);
+  until {(UnitList[i].UnitName[0]='') or} (i=8);
+  CloseFile(UnitListFile);
+end;
+
+procedure TUnitEditForm.UpdateUnitListGrid;
+var i, x, y: byte;
+begin
+  i:=0; x:=0; y:=0;
+  repeat
+    i:=i+1;
+    //if UnitList[i].UnitName[0]='' then Break
+    //else
+      //begin
+        with UnitList[i] do
+          //while UnitName[y] <> '' do
+          repeat
+            begin
+              strgrdUnitList.Cells[x,y]:=UnitName[y];
+              y:=y+1;
+            end;
+
+          until y=5;
+      //end;
+    x:=x+1;
+    y:=0;
+  until (i=8) or (x=4);
+end;
+
+initialization
+  {$I unitedit.lrs}
+
+end.
+

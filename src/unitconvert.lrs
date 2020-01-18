@@ -1,0 +1,23 @@
+{ This is an automatically generated lazarus resource file }
+
+LazarusResources.Add('TUnitConvertForm','FORMDATA',[
+  'TPF0'#16'TUnitConvertForm'#15'UnitConvertForm'#4'Left'#3#28#2#6'Height'#3'n'
+  +#1#3'Top'#3'T'#1#5'Width'#3'f'#1#11'BorderIcons'#11#12'biSystemMenu'#10'biMi'
+  +'nimize'#0#11'BorderStyle'#7#8'bsSingle'#7'Caption'#6#12'Unit Convert'#12'Cl'
+  +'ientHeight'#3'n'#1#11'ClientWidth'#3'f'#1#8'OnCreate'#7#10'FormCreate'#8'Po'
+  +'sition'#7#16'poMainFormCenter'#10'LCLVersion'#6#7'1.6.0.4'#0#9'TComboBox'#6
+  +'Filter'#4'Left'#2#16#6'Height'#2#23#3'Top'#2#16#5'Width'#3#160#0#10'ItemHei'
+  +'ght'#2#15#9'OnCloseUp'#7#18'FilterChangeBounds'#5'Style'#7#14'csDropDownLis'
+  +'t'#8'TabOrder'#2#0#0#0#8'TListBox'#11'ConvertList'#4'Left'#2#16#6'Height'#3
+  +#18#1#3'Top'#2'0'#5'Width'#3#160#0#10'ItemHeight'#2#0#17'OnSelectionChange'#7
+  +#26'ConvertListSelectionChange'#8'TabOrder'#2#1#0#0#8'TListBox'#10'ResultLis'
+  +'t'#4'Left'#3#184#0#6'Height'#3'2'#1#3'Top'#2#16#5'Width'#3#160#0#10'ItemHei'
+  +'ght'#2#0#17'OnSelectionChange'#7#25'ResultListSelectionChange'#8'TabOrder'#2
+  +#2#0#0#5'TEdit'#12'ConvertValue'#4'Left'#2#16#6'Height'#2#23#4'Hint'#6#4'tes'
+  +'t'#3'Top'#3'H'#1#5'Width'#3#160#0#9'MaxLength'#3#200#0#8'OnChange'#7#18'Con'
+  +'vertValueChange'#10'OnKeyPress'#7#15'ConvertKeyPress'#14'ParentShowHint'#8#8
+  +'ShowHint'#9#8'TabOrder'#2#3#0#0#5'TEdit'#11'ResultValue'#4'Left'#3#184#0#6
+  +'Height'#2#23#3'Top'#3'H'#1#5'Width'#3#160#0#9'MaxLength'#3#200#0#8'OnChange'
+  +#7#17'ResultValueChange'#10'OnKeyPress'#7#15'ConvertKeyPress'#8'TabOrder'#2#4
+  +#0#0#0
+]);

@@ -1,0 +1,65 @@
+object UnitConvertForm: TUnitConvertForm
+  Left = 540
+  Height = 366
+  Top = 340
+  Width = 358
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'Unit Convert'
+  ClientHeight = 366
+  ClientWidth = 358
+  OnCreate = FormCreate
+  Position = poMainFormCenter
+  LCLVersion = '1.6.0.4'
+  object Filter: TComboBox
+    Left = 16
+    Height = 23
+    Top = 16
+    Width = 160
+    ItemHeight = 15
+    OnCloseUp = FilterChangeBounds
+    Style = csDropDownList
+    TabOrder = 0
+  end
+  object ConvertList: TListBox
+    Left = 16
+    Height = 274
+    Top = 48
+    Width = 160
+    ItemHeight = 0
+    OnSelectionChange = ConvertListSelectionChange
+    TabOrder = 1
+  end
+  object ResultList: TListBox
+    Left = 184
+    Height = 306
+    Top = 16
+    Width = 160
+    ItemHeight = 0
+    OnSelectionChange = ResultListSelectionChange
+    TabOrder = 2
+  end
+  object ConvertValue: TEdit
+    Left = 16
+    Height = 23
+    Hint = 'test'
+    Top = 328
+    Width = 160
+    MaxLength = 200
+    OnChange = ConvertValueChange
+    OnKeyPress = ConvertKeyPress
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 3
+  end
+  object ResultValue: TEdit
+    Left = 184
+    Height = 23
+    Top = 328
+    Width = 160
+    MaxLength = 200
+    OnChange = ResultValueChange
+    OnKeyPress = ConvertKeyPress
+    TabOrder = 4
+  end
+end
